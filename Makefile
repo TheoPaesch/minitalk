@@ -4,7 +4,7 @@ SERVERNAME	:= server
 
 CFLAGS	:= -Wextra -Wall -Werror
 
-HEADERS	:= -I ./minitalk.h
+HEADERS	:= -I ./
 
 LIB := ./libft/libftprintf.a
 
@@ -25,10 +25,10 @@ CC		:= cc
 all: $(CLIENTNAME) $(SERVERNAME)
 
 lib:
-	make -C ./libft
+	@make -C ./libft
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
+	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES) && printf "Compiling: $(notdir $<)\n"
 
 $(CLIENTNAME): $(CLIENTOBJS) lib
 	@$(CC) $(CLIENTOBJS) $(LIB) $(HEADERS) -o $(CLIENTNAME)
@@ -37,13 +37,13 @@ $(SERVERNAME): $(SERVEROBJS) lib
 	@$(CC) $(SERVEROBJS) $(LIB) $(HEADERS) -o $(SERVERNAME)
 
 clean:
-	make -C ./libft clean
-	rm -rf $(CLIENTOBJS) $(SERVEROBJS)
+	@make -C ./libft clean
+	@rm -rf $(CLIENTOBJS) $(SERVEROBJS)
 
 fclean: clean
-	make -C ./libft fclean
-	rm -rf $(CLIENTNAME) $(SERVERNAME)
+	@make -C ./libft fclean
+	@rm -rf $(CLIENTNAME) $(SERVERNAME)
 
-re: clean all
+re: fclean all
 
 .PHONY: all, clean, fclean, re, lib

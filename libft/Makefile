@@ -13,9 +13,9 @@ error.c
 
 OBJECTS	= ${SOURCES:.c=.o}
 
-INCLUDES	= ft_printf.h
+INCLUDES	= ./
 
-CFLAGS	= -Wall -Wextra -Werror -g
+CFLAGS	= -Wall -Wextra -Werror
 
 LIBFT_DIR	= ./libft
 

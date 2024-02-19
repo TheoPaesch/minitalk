@@ -6,7 +6,7 @@
 /*   By: tpaesch <tpaesch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:16:08 by tpaesch           #+#    #+#             */
-/*   Updated: 2023/11/02 11:37:18 by tpaesch          ###   ########.fr       */
+/*   Updated: 2024/02/19 23:44:26 by tpaesch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ int	switch_print(char c, va_list args)
 static int	helper(int *i, const char *str, va_list args)
 {
 	int	temp;
-	int	temp2;
 
-	temp2 = 0;
 	temp = 0;
 	if (str[*i] == '%')
 	{
