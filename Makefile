@@ -22,27 +22,27 @@ SERVEROBJS	:= ${SERVERSRCS:.c=.o}
 
 CC		:= cc
 
-all: $(CLIENTNAME) $(SERVERNAME)
+all: lib $(CLIENTNAME) $(SERVERNAME)
 
 lib:
-	@make -C ./libft
+	make -C ./libft
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES) && printf "Compiling: $(notdir $<)\n"
+	$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES) && printf "Compiling: $(notdir $<)\n"
 
-$(CLIENTNAME): $(CLIENTOBJS) lib
-	@$(CC) $(CLIENTOBJS) $(LIB) $(HEADERS) -o $(CLIENTNAME)
+$(CLIENTNAME): $(CLIENTOBJS)
+	$(CC) $(CLIENTOBJS) $(LIB) $(HEADERS) -o $@
 
-$(SERVERNAME): $(SERVEROBJS) lib
-	@$(CC) $(SERVEROBJS) $(LIB) $(HEADERS) -o $(SERVERNAME)
+$(SERVERNAME): $(SERVEROBJS)
+	$(CC) $(SERVEROBJS) $(LIB) $(HEADERS) -o $@
 
 clean:
-	@make -C ./libft clean
-	@rm -rf $(CLIENTOBJS) $(SERVEROBJS)
+	make -C ./libft clean
+	rm -rf $(CLIENTOBJS) $(SERVEROBJS)
 
 fclean: clean
-	@make -C ./libft fclean
-	@rm -rf $(CLIENTNAME) $(SERVERNAME)
+	make -C ./libft fclean
+	rm -rf $(CLIENTNAME) $(SERVERNAME)
 
 re: fclean all
 

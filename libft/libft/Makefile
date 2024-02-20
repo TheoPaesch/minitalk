@@ -41,14 +41,13 @@ OBJECTS	= ${SOURCES:.c=.o}
 INCLUDES	= libft.h
 
 CFLAGS	= -Wall -Wextra -Werror
-CFLAGS	=
 
 .c.o:
-	cc ${CFLAGS} -c $< -o ${<:.c=.o} -I ${INCLUDES}
+	cc ${CFLAGS} -c $< -o $@ -I ${INCLUDES}
 
 ${NAME}: ${OBJECTS}
 	ar rc ${NAME} ${OBJECTS}
-	ranlib ${NAME}
+	ranlib $@
 
 all: ${NAME}
 
@@ -59,3 +58,5 @@ fclean: clean
 	rm -f ${NAME}
 
 re: fclean all
+
+.PHONY: all clean fclean re

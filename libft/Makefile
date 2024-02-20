@@ -22,16 +22,14 @@ LIBFT_DIR	= ./libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 .c.o:
-	cc ${CFLAGS} -c $< -o ${<:.c=.o} -I ${INCLUDES}
+	cc ${CFLAGS} -c $< -o $@ -I ${INCLUDES}
 
 ${NAME}: ${OBJECTS} $(LIBFT)
 	cp $(LIBFT) $(NAME)
-	ar rc ${NAME} ${OBJECTS}
-	ranlib ${NAME}
+	ar rcs $@ ${OBJECTS}
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
-	cp $(LIBFT) $(NAME)
 
 all: ${NAME}
 
@@ -44,3 +42,5 @@ fclean: clean
 	rm -f ${NAME}
 
 re: fclean all
+
+.PHONY: all clean fclean re
