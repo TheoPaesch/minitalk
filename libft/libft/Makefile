@@ -33,7 +33,8 @@ ft_strrchr.c \
 ft_strtrim.c \
 ft_substr.c \
 ft_tolower.c \
-ft_toupper.c
+ft_toupper.c \
+ft_num_send.c
 
 
 OBJECTS	= ${SOURCES:.c=.o}

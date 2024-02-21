@@ -6,7 +6,7 @@
 /*   By: tpaesch <tpaesch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:51:55 by tpaesch           #+#    #+#             */
-/*   Updated: 2024/02/19 23:50:07 by tpaesch          ###   ########.fr       */
+/*   Updated: 2024/02/20 19:00:47 by tpaesch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <signal.h>
+# include <string.h>
 
 int		ft_isalpha(int num);
 int		ft_isalnum(int num);
@@ -30,6 +32,7 @@ char	*ft_strchr(const char *s, int c);
 void	ft_bzero(void *s, int num);
 int		ft_atoi(const char *str);
 void	*ft_memset(void *b, int c, size_t len);
+void	num_send(int pid, int len);
 void	ft_putchar_fd(char c, int fd);
 void	*ft_memmove(void *dst, const void *src, size_t len);
 void	ft_putnbr_fd(int n, int fd);

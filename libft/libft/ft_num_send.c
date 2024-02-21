@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_num_send.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpaesch <tpaesch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 17:34:40 by tpaesch           #+#    #+#             */
-/*   Updated: 2024/02/20 19:16:04 by tpaesch          ###   ########.fr       */
+/*   Created: 2024/02/20 18:59:47 by tpaesch           #+#    #+#             */
+/*   Updated: 2024/02/20 19:28:55 by tpaesch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "libft/ft_printf.h"
-# include <signal.h>
-# include <string.h>
-# include <stdio.h>
-# include <stdlib.h>
-
-typedef struct s_assist
+void	num_send(int pid, int len)
 {
-	char	*str;
-	char	c;
-	int		flag;
-	int		bit;
-	int		j;
-	int		k;
-	int		cpid;
-	int		flag2;
-}	t_assist;
+	int	bit;
 
-void	ft_error(int i);
-
-#endif
+	bit = 0;
+	while (bit < 16)
+	{
+		kill(pid, SIGUSR1 + !(len & (0x01 << bit++)));
+		usleep(50);
+	}
+}

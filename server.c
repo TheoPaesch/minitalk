@@ -6,7 +6,7 @@
 /*   By: tpaesch <tpaesch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 18:23:05 by tpaesch           #+#    #+#             */
-/*   Updated: 2024/02/19 23:41:19 by tpaesch          ###   ########.fr       */
+/*   Updated: 2024/02/21 14:14:02 by tpaesch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	set_struct(t_assist *assist)
 	assist->bit = 0;
 	assist->c = 0;
 	assist->j = 0;
+	assist->flag2 = 1;
 }
 
 static void	i_need_space(t_assist *assist, int f)
@@ -33,11 +34,13 @@ static void	i_need_space(t_assist *assist, int f)
 		assist->str[assist->j] = assist->c;
 		ft_printf("%s", assist->str);
 		free(assist->str);
+		num_send(assist->cpid, assist->k);
 		set_struct(assist);
+		assist->k++;
 	}
 }
 
-static int	get_len(int signal, char **str, int *flag)
+static int	get_len(int signal, char **str, int *flag, t_assist	*assist)
 {
 	static int	i = 0;
 	static int	bit = 0;
@@ -45,14 +48,21 @@ static int	get_len(int signal, char **str, int *flag)
 	if (signal == SIGUSR1)
 		i |= (0x01 << bit);
 	bit++;
-	if (bit == 16)
+	if (bit == 16 && assist->flag2 == 1)
 	{
 		*str = malloc((i + 1) * sizeof(char));
 		if (str == NULL)
 			exit(EXIT_FAILURE);
-		*flag = 0;
+		i = 0;
+		bit = 0;
+		assist->flag2 = 0;
+	}
+	if (bit == 16 && assist->flag2 != 1)
+	{
+		assist->cpid = i;
 		bit = 0;
 		i = 0;
+		*flag = 0;
 	}
 	return (0);
 }
@@ -64,11 +74,12 @@ static void	def_char(int signal)
 
 	if (init)
 	{
+		assist.k = 0;
 		set_struct(&assist);
 		init = 0;
 	}
 	if (assist.flag == 1)
-		get_len(signal, &assist.str, &assist.flag);
+		get_len(signal, &assist.str, &assist.flag, &assist);
 	else if (assist.flag == 0)
 	{
 		if (signal == SIGUSR1)
